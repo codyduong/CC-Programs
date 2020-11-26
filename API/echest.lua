@@ -1,5 +1,6 @@
---an API for handling enderchest storage
---V1.1.0
+--[[V1.1.1
+an API for handling enderchest storage
+--]]
 
 --[[
 A shared internal API function
@@ -71,29 +72,37 @@ function _shared(n1, s1, n2, n3, s2)
 		_turnLeft(1)
 	elseif s1 == "top" then
 		if not turtle.placeUp() then return false
-		for i, n in ipairs(a) do
-			turtle.select(n)
-			if s2 == "suck" then
+		if s2 == "suck" then
+			for i, n in ipairs(a) do
+				turtle.select(n)
 				turtle.suckUp(n3)
-			elseif s2 == "drop" then
-				turtle.dropUp(n3)
-			else
-				error("echest ecode:2")
 			end
+		end
+		elseif s2 == "drop" then
+			for i, n in ipairs(a) do
+				turtle.select(n)
+				turtle.dropUp(n3)
+			end
+		else
+			error("echest ecode:3")
 		end
 		turtle.select(n1)
 		turtle.digUp()
 	elseif s1 == "bottom" then
 		if not turtle.placeDown() then return false
-		for i, n in ipairs(a) do
-			turtle.select(n)
-			if s2 == "suck" then
+		if s2 == "suck" then
+			for i, n in ipairs(a) do
+				turtle.select(n)
 				turtle.suckDown(n3)
-			elseif s2 == "drop" then
-				turtle.dropDown(n3)
-			else
-				error("echest ecode:3")
 			end
+		end
+		elseif s2 == "drop" then
+			for i, n in ipairs(a) do
+				turtle.select(n)
+				turtle.dropDown(n3)
+			end
+		else
+			error("echest ecode:3")
 		end
 		turtle.select(n1)
 		turtle.digDown()
