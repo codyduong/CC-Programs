@@ -1,4 +1,4 @@
---[[V0.3.3
+--[[V0.3.4
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -253,13 +253,11 @@ todo
 --]]
 
 
-
 --[[temp disabled (has no use, and is confusing rn)
---[[
 A way to manage turtles
 --params
 f - int of min fuel, ie, if turtle.getFuel() passes under this threshold, it will return false
---]]
+
 function Eturtle:fuelCheck(f)
 	self.fuelLevel = turtle.getFuelLevel()
 	if not self.fuelLevel >= f then
@@ -282,9 +280,8 @@ end
 
 
 --[[If you need to read from file using Eturtle, you're doing something wrong. I think...? Anyways I manage to do without this method, and the Eturtleless API is intended for this purpose.
---[[
 Meant to return a Eturtle object after reading it from a file.
---]]
+
 function readFile(d)
 
 end
