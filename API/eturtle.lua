@@ -223,7 +223,7 @@ function Eturtle:moveDirection(s, n, e)
 	elseif s == "back"
 		for i=1, a do
 			if not turtle.back() then break end
-			self._setPosition(self.position + positionKey[self.direction])
+			self._setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
 		end
 	elseif s == "up"
 		for i=1, a do
