@@ -1,4 +1,4 @@
---[[V0.3.1
+--[[V0.3.2
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -166,12 +166,12 @@ function Eturtle:turnToAbsolute(s)
 	local leftTurnCount = keyLeft[(self.direction)..s]
 	local rightTurnCount = keyRight[(self.direction)..s]
 	if leftTurnCount <= rightTurnCount then
-		for i=1, leftTurnCount()
+		for i=1, leftTurnCount() do
 			turtle.turnLeft()
 			self:_incrementDirection(-1)
 		end
 	else
-		for i=1, rightTurnCount then
+		for i=1, rightTurnCount do
 			turtle.turnRight()
 			self:_incrementDirection(1)
 		end
