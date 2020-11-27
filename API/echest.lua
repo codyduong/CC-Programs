@@ -1,16 +1,16 @@
---[[V1.1.1
+--[[V1.1.2
 an API for handling enderchest storage
 --]]
 
 --[[
 A shared internal API function
 --params
-n1 - eChest slot (int)
-s1 - eChest location (string: "front", "back",
+n1 = eChest slot (int)
+s1 = eChest location (string: "front", "back",
 "left", "right", "top", "bottom")
-n2 - array or slot to deposit ({int, int} or int)
-n3 - an amount to withdraw/deposit (int)
-s2 - drop/suck (string: "drop", "suck")
+n2 = array or slot to deposit ({int, int} or int)
+n3 = an amount to withdraw/deposit (int)
+s2 = drop/suck (string: "drop", "suck")
 --]]
 function _shared(n1, s1, n2, n3, s2)
 	a = {}
@@ -112,10 +112,10 @@ end
 --[[
 Used for depositing objects into an eChest
 --params
-n1 - eChest slot (int)
-s1 - eChest location (string)
-n2 - array or slot to deposit ({int, int} or int)
-n3 - an amount to withdraw/deposit (int) 
+n1 = eChest slot (int)
+s1 = eChest location (string)
+n2 = array or slot to deposit ({int, int} or int)
+n3 = an amount to withdraw/deposit (int) 
 --]]
 function deposit(n1, s1, n2, n3)
 	local opt = 64
@@ -126,10 +126,10 @@ end
 --[[
 Used for withdrawing objects from an eChest
 --params
-n1 - eChest slot (int)
-s1 - eChest location (string)
-n2 - array or slot to deposit ({int, int} or int)
-n3 - an amount to withdraw/deposit (int)
+n1 = eChest slot (int)
+s1 = eChest location (string)
+n2 = array or slot to deposit ({int, int} or int)
+n3 = an amount to withdraw/deposit (int)
 --]]
 function withdraw(n1, s1, n2, n3)
 	local opt = 64
