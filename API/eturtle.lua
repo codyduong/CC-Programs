@@ -1,4 +1,4 @@
---[[V0.3.2
+--[[V0.3.3
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -215,22 +215,22 @@ function Eturtle:moveDirection(s, n, e)
 			if not turtle.forward() then break end
 			self._setPosition(self.position + positionKey[self.direction])
 		end
-	elseif s == "front"
+	elseif s == "front" then
 		for i=1, a do
 			if not turtle.back() then break end
 			self._setPosition(self.position + positionKey[self.direction])
 		end
-	elseif s == "back"
+	elseif s == "back" then
 		for i=1, a do
 			if not turtle.back() then break end
 			self._setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
 		end
-	elseif s == "up"
+	elseif s == "up" then
 		for i=1, a do
 			if not turtle.up() then break end
 			self._setPosition(self.position + vector.new(0,1,0))
 		end
-	elseif s == "down"
+	elseif s == "down" then
 		for i=1, a do
 			if not turtle.down() then break end
 			self._setPosition(self.position + vector.new(0,-1,0))
