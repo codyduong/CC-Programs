@@ -1,4 +1,4 @@
---[[V0.3.0
+--[[V0.3.1
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -152,15 +152,15 @@ s = string ("north", "east", "south", "west")
 --]]
 function Eturtle:turnToAbsolute(s)
 	local keyLeft = 
-		{["northnorth"] = 0, ["northeast"] = 3, ["northsouth"] = 2, ["northwest"] = 1
-		["eastnorth"] = 1, ["easteast"] = 0, ["eastsouth"] = 3, ["eastwest"] = 2
-		["southnorth"] = 2, ["southeast"] = 1, ["southsouth"] = 0, ["southwest"] = 3
+		{["northnorth"] = 0, ["northeast"] = 3, ["northsouth"] = 2, ["northwest"] = 1,
+		["eastnorth"] = 1, ["easteast"] = 0, ["eastsouth"] = 3, ["eastwest"] = 2,
+		["southnorth"] = 2, ["southeast"] = 1, ["southsouth"] = 0, ["southwest"] = 3,
 		["westnorth"] = 3, ["westeast"] = 2, ["westsouth"] = 1, ["westwest"] = 0
 		}
 	local keyRight =
-		{["northnorth"] = 0, ["northeast"] = 1, ["northsouth"] = 2, ["northwest"] = 3
-		["eastnorth"] = 3, ["easteast"] = 0, ["eastsouth"] = 1, ["eastwest"] = 2
-		["southnorth"] = 2, ["southeast"] = 3, ["southsouth"] = 0, ["southwest"] = 1
+		{["northnorth"] = 0, ["northeast"] = 1, ["northsouth"] = 2, ["northwest"] = 3,
+		["eastnorth"] = 3, ["easteast"] = 0, ["eastsouth"] = 1, ["eastwest"] = 2,
+		["southnorth"] = 2, ["southeast"] = 3, ["southsouth"] = 0, ["southwest"] = 1,
 		["westnorth"] = 1, ["westeast"] = 2, ["westsouth"] = 3, ["westwest"] = 0
 		}
 	local leftTurnCount = keyLeft[(self.direction)..s]
