@@ -1,4 +1,4 @@
---[[V1.1.2
+--[[V1.1.3
 an API for handling enderchest storage
 --]]
 
@@ -13,7 +13,9 @@ n3 = an amount to withdraw/deposit (int)
 s2 = drop/suck (string: "drop", "suck")
 --]]
 function _shared(n1, s1, n2, n3, s2)
-	a = {}
+	local topEquals = {["top"] = true, ["up"]= true}
+	local botEquals = {["bottom"] = true, ["down"]= true}
+	local a = {}
 	if type(n2) == "number" then
 		a = {n2}
 	elseif type(n2) == "table" then
@@ -70,7 +72,7 @@ function _shared(n1, s1, n2, n3, s2)
 		_simpDo()
 		turtle.dig()
 		_turnLeft(1)
-	elseif s1 == "top" then
+	elseif topEquals[s] then
 		if not turtle.placeUp() then return false
 		if s2 == "suck" then
 			for i, n in ipairs(a) do
@@ -88,7 +90,7 @@ function _shared(n1, s1, n2, n3, s2)
 		end
 		turtle.select(n1)
 		turtle.digUp()
-	elseif s1 == "bottom" then
+	elseif botEquals[s] then
 		if not turtle.placeDown() then return false
 		if s2 == "suck" then
 			for i, n in ipairs(a) do
