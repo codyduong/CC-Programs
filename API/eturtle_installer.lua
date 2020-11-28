@@ -2,11 +2,11 @@
 self-referencial pastebin here: rPpJjEFx
 Installs the necessary components for eturtle in one package
 Currently contains:
-startup.lua (V0.0.1) [If not already installed]
+startup.lua (V0.0.2) [If not already installed]
 
-eturtle.lua (V0.3.11)
+eturtle.lua (V0.3.12)
 json.lua --stored constantly at 4nRg9CHU (hopefully)
-eturtle_startup.lua (V0.0.1)
+eturtle_startup.lua (V0.0.4)
 --]]
 
 if not fs.exists("api") then fs.makeDir("api") end
