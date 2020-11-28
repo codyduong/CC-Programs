@@ -1,10 +1,10 @@
---[[v0.0.4
+--[[v0.0.5
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
 --]]
 
-et = require("api/eturtle")
+et = require("/api/eturtle")
 local t = et:new()
 
 function askForPosition()
