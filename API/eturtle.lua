@@ -1,4 +1,4 @@
---[[V0.3.5
+--[[V0.3.6
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -118,6 +118,7 @@ if you want to transmit the Eturtles info accurately.
 s1 = a string indicating where to turn to ("left", "right", "back") are the only accepted params
 --]]
 function Eturtle:turnTo(s)
+	local na = {["front"] = true, ["forward"] = true, ["top"] = true, ["bottom"] = true, ["up"] = true, ["down"] = true}
 	if s == "left" then
 		if turtle.turnLeft() then 
 			self:_incrementDirection(-1)
@@ -140,7 +141,9 @@ function Eturtle:turnTo(s)
 		else
 			error("eturtle turnTo ecode:2")
 		end
-	else 
+	elseif na[s] then
+		print("bypass")
+	else
 		error("eturtle turnTo ecode:3")
 	end
 end
@@ -167,7 +170,7 @@ function Eturtle:turnToAbsolute(s)
 	local leftTurnCount = keyLeft[(self.direction)..s]
 	local rightTurnCount = keyRight[(self.direction)..s]
 	if leftTurnCount <= rightTurnCount then
-		for i=1, leftTurnCount() do
+		for i=1, leftTurnCount do
 			turtle.turnLeft()
 			self:_incrementDirection(-1)
 		end
@@ -192,7 +195,7 @@ n = amount to move that direction
 e = end direction (will end up facing same way if no input) ("left", "right", "back")
 --]]
 function Eturtle:moveDirection(s, n, e)
-	local a = 1
+	a = 1
 	if n then
 		a = n
 	end
@@ -210,15 +213,17 @@ function Eturtle:moveDirection(s, n, e)
 		["south"] = vector.new(0,0,1),
 		["west"] = vector.new(-1,0,0)
 		}
-	if turnKey[s][1] then
-		self:turnTo(s)
-		for i=1, a do
-			if not turtle.forward() then break end
-			self._setPosition(self.position + positionKey[self.direction])
+	if not turnKey[s] == nil then
+		if turnKey[s][1] then
+			self:turnTo(s)
+			for i=1, a do
+				if not turtle.forward() then break end
+				self._setPosition(self.position + positionKey[self.direction])
+			end
 		end
 	elseif s == "front" then
 		for i=1, a do
-			if not turtle.back() then break end
+			if not turtle.forward() then break end
 			self._setPosition(self.position + positionKey[self.direction])
 		end
 	elseif s == "back" then
@@ -241,7 +246,7 @@ function Eturtle:moveDirection(s, n, e)
 	if e then
 		eMod = keyRelative[s..e]
 	end
-	if not e and turnKey[s][1] then
+	if not e and not turnKey[s] == nil then
 		self.turnTo(turnKey[s][2])
 	elseif eMod then
 		self.turnTo(eMod)
