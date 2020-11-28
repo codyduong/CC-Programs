@@ -1,5 +1,6 @@
---[[v0.3.16
+--[[v0.3.17
 an API which stands for enhanced turtle, just creates more sophisticated methods
+TODO: fix so when eturtle.new is called it checks for existing files first.
 --]]
 os.loadAPI("api/json.lua")
 
@@ -9,19 +10,19 @@ Especially utilized for rednet passing, and network management of turtles
 --]]
 Eturtle = {}
 function Eturtle:new()
-	local o = {}
-	setmetatable(o, self)
+	local et = {}
+	setmetatable(et, self)
 	self.__index = self
-	self.position = vector.new(0,0,0) --x (+east, -west); y (+up, -down); z (+south, -north)
-	self.direction = "north" --"north", "east", "south", "west"
-	self.fuelLevel = turtle.getFuelLevel()
-	self.fuelLimit = turtle.getFuelLimit()
-	self.contents = {} --{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
+	et.position = vector.new(0,0,0) --x (+east, -west); y (+up, -down); z (+south, -north)
+	et.direction = "north" --"north", "east", "south", "west"
+	et.fuelLevel = turtle.getFuelLevel()
+	et.fuelLimit = turtle.getFuelLimit()
+	et.contents = {} --{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
 	for i=1, 16 do
 		self.contents[i] = turtle.getItemDetail(i)
 	end
-	self.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
-	return o
+	et.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
+	return et
 end
 
 --[[
