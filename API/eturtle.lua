@@ -1,4 +1,4 @@
---[[v0.3.17
+--[[v0.3.18
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
 TODO: move away from using json API and instead back to textutils.serialize()
@@ -294,7 +294,7 @@ d = directory
 --]]
 function Eturtle:readFromFile(d)
 	if fs.exists(d) then
-		local turtle = json.decodeFromFile(d)
+		local turtle = textutils.unserialize(fs.openAll(d, "r"))
 		self = turtle
 	else return false end
 end
@@ -302,10 +302,12 @@ end
 
 --[[
 writes data to the file directory, for use in other programs or etc.
+--params
+d = directory
 --]]
 function Eturtle:writeToFile(d)
 	local file = assert(fs.open(d, "w"))
-	file.write(json.encode(self))
+	file.write(textutils.serialize(self))
 	file.close()
 end
 
