@@ -1,4 +1,4 @@
---[[V0.3.10
+--[[V0.3.11
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 os.loadAPI("api/json")
@@ -291,8 +291,10 @@ reads data from file directory, and uses that as reference for Eturtle metadata
 d = directory
 --]]
 function ETurtle:readFromFile(d)
-	local turtle = json.decodeFromFile(d)
-	self = turtle
+	if d then
+		local turtle = json.decodeFromFile(d)
+		self = turtle
+	else return false end
 end
 
 
