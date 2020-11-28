@@ -1,4 +1,4 @@
---[[v0.3.14
+--[[v0.3.15
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 os.loadAPI("api/json.lua")
@@ -302,7 +302,8 @@ end
 writes data to the file directory, for use in other programs or etc.
 --]]
 function Eturtle:writeToFile(d)
-	local file = fs.open(d, "w")
+	d_mod = shell.resolve(d)
+	local file = fs.open(d_mod, "w")
 	file.write(json.encode(self))
 	file.close()
 end

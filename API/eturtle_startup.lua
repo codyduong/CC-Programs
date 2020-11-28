@@ -1,4 +1,4 @@
---[[v0.0.6
+--[[v0.0.7
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
@@ -11,7 +11,7 @@ function askForPosition()
 	print('Input space-seperated position of the turtle (x y z)')
 	local s = read()
 	fs = {}
-	for substring in r:gmatch("%S+") do
+	for substring in s:gmatch("%S+") do
 	   table.insert(fs, substring)
 	end
 	local x, y, z = fs[1], fs[2], fs[3]
