@@ -102,19 +102,7 @@ function Eturtle:_incrementDirection(i)
 	else
 		error("Eturtle direction is nil")
 	end
-
-
---[[
-Used for turtle initialization for any values which cannot already be determined.
-IE. set the turtles position/direction here,
-otherwise it will use relative positioning.
-(north = whichever way the turtle was facing, and not the actual world north)
-(0,0,0 = where the turtle started, and not the actual world 0,0,0)
-Recommended you use GPS for determining pos, orientation is set manually
---]]
-function Eturtle:init(v, s)
-	self:_setPosition(v)
-	self:_setDirection(s)
+	self:writeToFile()
 end
 
 
