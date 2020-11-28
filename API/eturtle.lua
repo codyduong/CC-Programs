@@ -1,4 +1,4 @@
---[[V0.3.6
+--[[V0.3.7
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -243,12 +243,12 @@ function Eturtle:moveDirection(s, n, e)
 		end
 	end
 	local eMod
-	if e then
+	if e ~= nil then
 		eMod = keyRelative[s..e]
 	end
-	if not e and not turnKey[s] == nil then
+	if e ~= nil and turnKey[s] ~= nil then
 		self.turnTo(turnKey[s][2])
-	elseif eMod then
+	elseif eMod ~= nil then
 		self.turnTo(eMod)
 	end
 end
