@@ -1,4 +1,4 @@
---[[v0.0.5
+--[[v0.0.6
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
@@ -33,16 +33,14 @@ function askForDirection()
 	end
 end
 
-if not t:readFromFile("turtle") then
-	if gps then
-		local x, y, z = gps.locate(5)
-		if x and y and z then
-			v = vector.new(x, y, z)
-			t:_setPosition(v)
-		end
+if not fs.exists("/turtle") then
+	local x, y, z = gps.locate(5)
+	if x and y and z then
+		v = vector.new(x, y, z)
+		t:_setPosition(v)
 	else
 		askForPosition()
 	end
 	askForDirection()
-	t:writeToFile("turtle")
+	t:writeToFile("/turtle")
 end
