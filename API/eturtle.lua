@@ -1,4 +1,4 @@
---[[V0.3.4
+--[[V0.3.5
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -6,20 +6,21 @@ an API which stands for enhanced turtle, just creates more sophisticated methods
 Creation of a eturtle object, which passes itself as a param for some programs
 Especially utilized for rednet passing, and network management of turtles
 --]]
+Eturtle = {}
 function Eturtle:new()
-	Eturtle = {}
-	setmetatable(Eturtle, self)
+	local o = {}
+	setmetatable(o, self)
 	self.__index = self
 	self.position = vector.new(0,0,0) --x (+east, -west); y (+up, -down); z (+south, -north)
 	self.direction = "north" --"north", "east", "south", "west"
-	self.fuelLevel = turtle.getFuel()
+	self.fuelLevel = turtle.getFuelLevel()
 	self.fuelLimit = turtle.getFuelLimit()
 	self.contents = {} --{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
 	for i=1, 16 do
-		contents[i] = turtle.getItemDetail(i)
+		self.contents[i] = turtle.getItemDetail(i)
 	end
 	self.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
-	return Eturtle
+	return o
 end
 
 --[[
@@ -209,7 +210,7 @@ function Eturtle:moveDirection(s, n, e)
 		["south"] = vector.new(0,0,1),
 		["west"] = vector.new(-1,0,0)
 		}
-	if key[s][1] then
+	if turnKey[s][1] then
 		self:turnTo(s)
 		for i=1, a do
 			if not turtle.forward() then break end
@@ -240,8 +241,8 @@ function Eturtle:moveDirection(s, n, e)
 	if e then
 		eMod = keyRelative[s..e]
 	end
-	if not e and key[s][1] then
-		self.turnTo(key[s][2])
+	if not e and turnKey[s][1] then
+		self.turnTo(turnKey[s][2])
 	elseif eMod then
 		self.turnTo(eMod)
 	end
@@ -256,7 +257,7 @@ todo
 --[[temp disabled (has no use, and is confusing rn)
 A way to manage turtles
 --params
-f - int of min fuel, ie, if turtle.getFuel() passes under this threshold, it will return false
+f - int of min fuel, ie, if turtle.getFuelLevel() passes under this threshold, it will return false
 
 function Eturtle:fuelCheck(f)
 	self.fuelLevel = turtle.getFuelLevel()
@@ -286,3 +287,4 @@ function readFile(d)
 
 end
 --]]
+return Eturtle
