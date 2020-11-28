@@ -1,4 +1,4 @@
---[[v0.4.0
+--[[v0.4.3
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
 --]]
@@ -292,8 +292,11 @@ reads data from file directory, and uses that as reference for Eturtle metadata
 d = directory
 --]]
 function Eturtle:readFromFile(d)
-	if fs.exists(d) then
-		local turtle = textutils.unserialize(fs.openAll(d, "r"))
+	d_default = "turtle"
+	if d then d_default = d end
+	if fs.exists(d_default) then
+		file = fs.open(d_default, "r")
+		local turtle = textutils.unserialize(file.readAll())
 		self = turtle
 	else return false end
 end
@@ -305,7 +308,9 @@ writes data to the file directory, for use in other programs or etc.
 d = directory
 --]]
 function Eturtle:writeToFile(d)
-	local file = assert(fs.open(d, "w"))
+	d_default = "turtle"
+	if d then d_default = d end
+	local file = assert(fs.open(d_default, "w"))
 	file.write(textutils.serialize(self))
 	file.close()
 end
