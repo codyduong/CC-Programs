@@ -1,11 +1,11 @@
---[[v0.0.11
+--[[v0.0.12
 self-referencial pastebin here: rPpJjEFx
 Installs the necessary components for eturtle in one package
 also planned to update files if necessary
 Currently contains:
 startup.lua (V0.0.2) [If not already installed]
 
-eturtle.lua (V0.3.18)
+eturtle.lua (V0.3.19)
 eturtle_startup.lua (V0.0.7)
 --params
 arg1 = boolean stating whether to update (optional parameter)
@@ -32,7 +32,7 @@ if not arg1 then --If not asking for a reinstall, do a clean install: does not o
 	os.sleep(3) --just so the user can read the prompt
 	os.reboot()
 else 
-	if not fs.exists("startup.lua") then 
+	if fs.exists("startup.lua") then 
 		fs.delete("startup.lua")
 	end
 	if fs.exists("api/eturtle.lua") then

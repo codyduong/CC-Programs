@@ -1,8 +1,7 @@
---[[v0.3.18
+--[[v0.3.20
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
 --]]
-os.loadAPI("api/json.lua")
 
 --[[
 Creation of a eturtle object, which passes itself as a param for some programs
@@ -17,10 +16,18 @@ function Eturtle:new()
 	et.direction = "north" --"north", "east", "south", "west"
 	et.fuelLevel = turtle.getFuelLevel()
 	et.fuelLimit = turtle.getFuelLimit()
-	et.contents = {} --{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
+	et.contents =
+	{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3), turtle.getItemDetail(4), 
+	turtle.getItemDetail(5), turtle.getItemDetail(6), turtle.getItemDetail(7), turtle.getItemDetail(8), 
+	turtle.getItemDetail(9), turtle.getItemDetail(10), turtle.getItemDetail(11), turtle.getItemDetail(12), 
+	turtle.getItemDetail(13), turtle.getItemDetail(14), turtle.getItemDetail(15), turtle.getItemDetail(16)
+	}
+	--[[this for loop for instantiating the elements with indice i, won't work due to contents nil(ing) itself as soon as it starts? maybe there is a better fix...
+	{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
 	for i=1, 16 do
 		self.contents[i] = turtle.getItemDetail(i)
 	end
+	--]]
 	et.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
 	return et
 end
