@@ -1,4 +1,4 @@
---[[v0.0.7
+--[[v0.0.8
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
@@ -16,7 +16,7 @@ function askForPosition()
 	end
 	local x, y, z = s_mod[1], s_mod[2], s_mod[3]
 	if x and y and z then
-		t:_setPosition(x, y, z)
+		t:_setPosition(vector.new(x, y, z))
 	else print("invalid position")
 		return askForPosition()
 	end
