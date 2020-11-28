@@ -19,7 +19,7 @@ local arg1, extra = ...
 if not fs.exists("api") then fs.makeDir("api") end
 if not fs.exists("startdir") then fs.makeDir("startdir") end
 if not arg1 then --If not asking for a reinstall, do a clean install: does not overwrite any files.
-	if not fs.exists("startup") then shell.run("pastebin get 7EtT3zBn startup.lua") end
+	if not fs.exists("startup.lua") then shell.run("pastebin get 7EtT3zBn startup.lua") end
 	if not fs.exists("api/eturtle.lua") then
 		shell.run("pastebin get 5emHRrcV eturtle.lua")
 		shell.run("move eturtle.lua api/")
@@ -32,16 +32,16 @@ if not arg1 then --If not asking for a reinstall, do a clean install: does not o
 	os.sleep(3) --just so the user can read the prompt
 	os.reboot()
 else 
-	if not fs.exists("startup") then 
-		fs.delete("startup")
+	if not fs.exists("startup.lua") then 
+		fs.delete("startup.lua")
 	end
-	shell.run("pastebin get 7EtT3zBn startup.lua") 
 	if fs.exists("api/eturtle.lua") then
-		fs.delete("startdir/eturtle_startup.lua")
+		fs.delete("api/eturtle.lua")
 	end
 	if fs.exists("startdir/eturtle_startup.lua") then
 		fs.delete("startdir/eturtle_startup.lua")
 	end
+	shell.run("pastebin get 7EtT3zBn startup.lua") 
 	shell.run("pastebin get 5emHRrcV eturtle.lua")
 	shell.run("move eturtle.lua api/")
 	shell.run("pastebin get mNVUrxpn eturtle_startup.lua")
