@@ -1,4 +1,4 @@
---[[V1.1.3
+--[[v1.1.3
 an API for handling enderchest storage
 --]]
 

@@ -1,4 +1,4 @@
---[[V0.0.1
+--[[v0.0.1
 Runs lua files in directory named "startdir" available at
 the root of files. Typically will be installed by
 eturtle_installer, or another installer, if not

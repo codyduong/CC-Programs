@@ -1,4 +1,4 @@
---[[V0.1.0
+--[[v0.1.0
 A program which scrapes the surface of the world, 16x16 area at a time,
 digs 3 blocks deeper than the deepest layer of the dirt, intented to collect
 various surface ores

@@ -1,4 +1,4 @@
---[[V0.0.1
+--[[v0.0.1
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
