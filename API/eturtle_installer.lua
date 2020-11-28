@@ -1,4 +1,4 @@
---[[v0.0.10
+--[[v0.0.11
 self-referencial pastebin here: rPpJjEFx
 Installs the necessary components for eturtle in one package
 also planned to update files if necessary
@@ -32,15 +32,20 @@ if not arg1 then --If not asking for a reinstall, do a clean install: does not o
 	os.sleep(3) --just so the user can read the prompt
 	os.reboot()
 else 
-	if not fs.exists("startup") then shell.run("pastebin get 7EtT3zBn startup.lua") end
-	if not fs.exists("api/eturtle.lua") then
-		shell.run("pastebin get 5emHRrcV eturtle.lua")
-		shell.run("move eturtle.lua api/")
+	if not fs.exists("startup") then 
+		fs.delete("startup")
 	end
-	if not fs.exists("startdir/eturtle_startup.lua") then
-		shell.run("pastebin get mNVUrxpn eturtle_startup.lua")
-		shell.run("move eturtle_startup.lua startdir/")
+	shell.run("pastebin get 7EtT3zBn startup.lua") 
+	if fs.exists("api/eturtle.lua") then
+		fs.delete("startdir/eturtle_startup.lua")
 	end
+	if fs.exists("startdir/eturtle_startup.lua") then
+		fs.delete("startdir/eturtle_startup.lua")
+	end
+	shell.run("pastebin get 5emHRrcV eturtle.lua")
+	shell.run("move eturtle.lua api/")
+	shell.run("pastebin get mNVUrxpn eturtle_startup.lua")
+	shell.run("move eturtle_startup.lua startdir/")
 	print("Updated and rebooting")
 	os.sleep(3) --just so the user can read the prompt
 	os.reboot()
