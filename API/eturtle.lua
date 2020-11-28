@@ -1,4 +1,4 @@
---[[v0.3.20
+--[[v0.4.0
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
 --]]
@@ -102,7 +102,6 @@ function Eturtle:_incrementDirection(i)
 	else
 		error("Eturtle direction is nil")
 	end
-end
 
 
 --[[
@@ -233,32 +232,38 @@ function Eturtle:moveDirection(s, n, e)
 		for i=1, a do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
+			self:writeToFile()
 		end
 	elseif s == "right" then
 		self:turnTo("right")
 		for i=1, a do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
+			self:writeToFile()
 		end
 	elseif s == "front" or s == "forward" then
 		for i=1, a do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
+			self:writeToFile()
 		end
 	elseif s == "back" then
 		for i=1, a do
 			if not turtle.back() then break end
 			self:_setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
+			self:writeToFile()
 		end
 	elseif s == "up" then
 		for i=1, a do
 			if not turtle.up() then break end
 			self:_setPosition(self.position + vector.new(0,1,0))
+			self:writeToFile()
 		end
 	elseif s == "down" then
 		for i=1, a do
 			if not turtle.down() then break end
 			self:_setPosition(self.position + vector.new(0,-1,0))
+			self:writeToFile()
 		end
 	end
 	if e ~= nil then
@@ -315,6 +320,16 @@ function Eturtle:writeToFile(d)
 	local file = assert(fs.open(d, "w"))
 	file.write(textutils.serialize(self))
 	file.close()
+end
+
+
+--[[
+writes a status to the turtle (ie. moving, mining, executing a command)
+--params
+s = string
+--]]
+function Eturtle:setStatus(s)
+	self.status = s
 end
 
 return Eturtle
