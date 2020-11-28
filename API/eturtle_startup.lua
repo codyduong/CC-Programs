@@ -1,14 +1,13 @@
---[[v0.0.1
+--[[v0.0.4
 A startup for turtle initialization.
 Put the following code in the startup.lua:
 local eturtlestartup = multishell.launch({}, "startup/eturtlestartup")
 --]]
 
-eturtle = require("eturtle")
-local t = eturtle:new()
+et = require("api/eturtle")
+local t = et:new()
 
 function askForPosition()
-	accepted = {["north"],["east"],["south"],["west"]}
 	print('Input space-seperated position of the turtle (x y z)')
 	local s = read()
 	fs = {}
@@ -24,8 +23,8 @@ function askForPosition()
 end
 
 function askForDirection()
-	accepted = {["north"],["east"],["south"],["west"]}
-	print('Input direction turtle is facing ("north", "east", "south", "west") '
+	local accepted = {["north"]=true,["east"]=true,["south"]=true,["west"]=true}
+	print('Input direction turtle is facing ("north", "east", "south", "west")')
 	local s = read()
 	if accepted[s] then
 		t:_setDirection(s)
