@@ -1,4 +1,4 @@
---[[V0.3.8
+--[[V0.3.9
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -105,8 +105,8 @@ otherwise it will use relative positioning.
 Recommended you use GPS for determining pos, orientation is set manually
 --]]
 function Eturtle:init(v, s)
-	self._setPosition(v)
-	self._setDirection(s)
+	self:_setPosition(v)
+	self:_setDirection(s)
 end
 
 
@@ -220,44 +220,44 @@ function Eturtle:moveDirection(s, n, e)
 		self:turnTo("left")
 		for i=1, a do
 			if not turtle.forward() then break end
-			self._setPosition(self.position + positionKey[self.direction])
+			self:_setPosition(self.position + positionKey[self.direction])
 		end
 	elseif s == "right" then
 		self:turnTo("right")
 		for i=1, a do
 			if not turtle.forward() then break end
-			self._setPosition(self.position + positionKey[self.direction])
+			self:_setPosition(self.position + positionKey[self.direction])
 		end
 	elseif s == "front" or s == "forward" then
 		for i=1, a do
 			if not turtle.forward() then break end
-			self._setPosition(self.position + positionKey[self.direction])
+			self:_setPosition(self.position + positionKey[self.direction])
 		end
 	elseif s == "back" then
 		for i=1, a do
 			if not turtle.back() then break end
-			self._setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
+			self:_setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
 		end
 	elseif s == "up" then
 		for i=1, a do
 			if not turtle.up() then break end
-			self._setPosition(self.position + vector.new(0,1,0))
+			self:_setPosition(self.position + vector.new(0,1,0))
 		end
 	elseif s == "down" then
 		for i=1, a do
 			if not turtle.down() then break end
-			self._setPosition(self.position + vector.new(0,-1,0))
+			self:_setPosition(self.position + vector.new(0,-1,0))
 		end
 	end
 	if e ~= nil then
-		if s == "left" or s == "right" then
-			self.turnTo(keyRelative[s..e])
+		if (s == "left") or (s == "right") then
+			self:turnTo(keyRelative[s..e])
 		else
-			self.turnTo(e)
+			self:turnTo(e)
 		end
 	else
 		if s == "left" then
-			self.turnTo("right")
+			self:turnTo("right")
 		elseif s == "right" then
 			self:turnTo("left")
 		end
