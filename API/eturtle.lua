@@ -1,6 +1,7 @@
 --[[v0.3.17
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
+TODO: move away from using json API and instead back to textutils.serialize()
 --]]
 os.loadAPI("api/json.lua")
 
