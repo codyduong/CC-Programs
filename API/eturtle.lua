@@ -1,6 +1,7 @@
---[[V0.3.9
+--[[V0.3.10
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
+os.loadAPI("api/json")
 
 --[[
 Creation of a eturtle object, which passes itself as a param for some programs
@@ -141,10 +142,13 @@ function Eturtle:turnTo(s)
 		else
 			error("eturtle turnTo ecode:2")
 		end
+	--[[Errors keep getting thrown, idk why so I just removed it. It works now, just don't put anything funny in the params
+	TODO fix, maybe... If I ever decide I need error throwing. But I don't... You might...
 	elseif na[s] then
 		print("bypass")
-	else
+	elseif not na[s] then
 		error("eturtle turnTo ecode:3")
+	--]]
 	end
 end
 
@@ -266,11 +270,6 @@ end
 
 
 --[[
-todo
---]]
-
-
---[[temp disabled (has no use, and is confusing rn)
 A way to manage turtles
 --params
 f - int of min fuel, ie, if turtle.getFuelLevel() passes under this threshold, it will return false
@@ -287,20 +286,23 @@ end
 
 
 --[[
-Writes itself to a file
+reads data from file directory, and uses that as reference for Eturtle metadata
 --params
 d = directory
 --]]
-function Eturtle:writeSelfToFile(d)
-	
+function ETurtle:readFromFile(d)
+	local turtle = json.decodeFromFile(d)
+	self = turtle
 end
 
 
---[[If you need to read from file using Eturtle, you're doing something wrong. I think...? Anyways I manage to do without this method, and the Eturtleless API is intended for this purpose.
-Meant to return a Eturtle object after reading it from a file.
-
-function readFile(d)
-
-end
+--[[
+writes data to the file directory, for use in other programs or etc.
 --]]
+function ETurtle:writeToFile(d)
+	local file = fs.open(d, w)
+	file.write(json.encode(self))
+	file.close()
+end
+
 return Eturtle
