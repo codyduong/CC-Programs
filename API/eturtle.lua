@@ -1,4 +1,4 @@
---[[v0.4.3
+--[[v0.4.4
 an API which stands for enhanced turtle, just creates more sophisticated methods
 TODO: fix so when eturtle.new is called it checks for existing files first.
 --]]
@@ -8,27 +8,29 @@ Creation of a eturtle object, which passes itself as a param for some programs
 Especially utilized for rednet passing, and network management of turtles
 --]]
 Eturtle = {}
-function Eturtle:new()
-	local et = {}
+function Eturtle:new(o)
+	local et = o or {}
 	setmetatable(et, self)
 	self.__index = self
-	et.position = vector.new(0,0,0) --x (+east, -west); y (+up, -down); z (+south, -north)
-	et.direction = "north" --"north", "east", "south", "west"
-	et.fuelLevel = turtle.getFuelLevel()
-	et.fuelLimit = turtle.getFuelLimit()
-	et.contents =
-	{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3), turtle.getItemDetail(4), 
-	turtle.getItemDetail(5), turtle.getItemDetail(6), turtle.getItemDetail(7), turtle.getItemDetail(8), 
-	turtle.getItemDetail(9), turtle.getItemDetail(10), turtle.getItemDetail(11), turtle.getItemDetail(12), 
-	turtle.getItemDetail(13), turtle.getItemDetail(14), turtle.getItemDetail(15), turtle.getItemDetail(16)
-	}
-	--[[this for loop for instantiating the elements with indice i, won't work due to contents nil(ing) itself as soon as it starts? maybe there is a better fix...
-	{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
-	for i=1, 16 do
-		self.contents[i] = turtle.getItemDetail(i)
+	if not o then --instantiates some default stuff
+		et.position = vector.new(0,0,0) --x (+east, -west); y (+up, -down); z (+south, -north)
+		et.direction = "north" --"north", "east", "south", "west"
+		et.fuelLevel = turtle.getFuelLevel()
+		et.fuelLimit = turtle.getFuelLimit()
+		et.contents =
+		{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3), turtle.getItemDetail(4), 
+		turtle.getItemDetail(5), turtle.getItemDetail(6), turtle.getItemDetail(7), turtle.getItemDetail(8), 
+		turtle.getItemDetail(9), turtle.getItemDetail(10), turtle.getItemDetail(11), turtle.getItemDetail(12), 
+		turtle.getItemDetail(13), turtle.getItemDetail(14), turtle.getItemDetail(15), turtle.getItemDetail(16)
+		}
+		--[[this for loop for instantiating the elements with indice i, won't work due to contents nil(ing) itself as soon as it starts? maybe there is a better fix...
+		{turtle.getItemDetail(1), turtle.getItemDetail(2), turtle.getItemDetail(3)...turtle.getItemDetail(16)}
+		for i=1, 16 do
+			self.contents[i] = turtle.getItemDetail(i)
+		end
+		--]]
+		et.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
 	end
-	--]]
-	et.status = "" --just a string which is passed to the network, use this to set a status of a turtle (ie. mining, moving, etc)
 	return et
 end
 
@@ -188,25 +190,21 @@ turn if absolutely necessary
 USE THIS FUNCTION over turtle.forward, et cetera
 if you want to transmit Eturtles info accurately.
 --params
-s = direction (string: "front", "back",
+s = direction (string: "forward", "back",
 "left", "right", "top", "bottom")
 n = amount to move that direction
 e = end direction (will end up facing same way if no input) ("left", "right", "back")
 --]]
 function Eturtle:moveDirection(s, n, e)
-	a = 1
-	if n then
-		a = n
-	end
+	s_def = s or "forward"
+	n_def = n or 1
+	e_def = e or "forward"
 	--starting direction --> ending direction
 	local keyRelative = 
-		--[[
-		{["leftleft"] = "forward",["leftright"] = "back",["leftback"] = "left",
-		["rightleft"] = "back",["rightright"] = "forward",["rightback"] = "right",
-		["backleft"] = "left",["backright"] = "right",["backback"] = "back"
-		}--]]
 		{["leftright"] = "back",["leftback"] = "left",
 		["rightleft"] = "back",["rightback"] = "right",
+		["leftforward"] = "right", ["leftfront"] = "right", 
+		["rightforward"] = "left", ["rightfront"] = "left", 
 		}
 	--creates a vector which chooses the appropriate direction
 	local positionKey =
@@ -215,57 +213,49 @@ function Eturtle:moveDirection(s, n, e)
 		["south"] = vector.new(0,0,1),
 		["west"] = vector.new(-1,0,0)
 		}
-	if s == "left" then
+	if s_def == "left" then
 		self:turnTo("left")
-		for i=1, a do
+		for i=1, n_def do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
 			self:writeToFile()
 		end
-	elseif s == "right" then
+	elseif s_def == "right" then
 		self:turnTo("right")
-		for i=1, a do
+		for i=1, n_def do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
 			self:writeToFile()
 		end
-	elseif s == "front" or s == "forward" then
-		for i=1, a do
+	elseif s_def == "front" or s == "forward" then
+		for i=1, n_def do
 			if not turtle.forward() then break end
 			self:_setPosition(self.position + positionKey[self.direction])
 			self:writeToFile()
 		end
-	elseif s == "back" then
-		for i=1, a do
+	elseif s_def == "back" then
+		for i=1, n_def do
 			if not turtle.back() then break end
 			self:_setPosition(self.position + (positionKey[self.direction]) * -1 ) --it multiplies by -1 since it goes backwards from the direction it's facing
 			self:writeToFile()
 		end
-	elseif s == "up" then
-		for i=1, a do
+	elseif s_def == "up" then
+		for i=1, n_def do
 			if not turtle.up() then break end
 			self:_setPosition(self.position + vector.new(0,1,0))
 			self:writeToFile()
 		end
-	elseif s == "down" then
-		for i=1, a do
+	elseif s_def == "down" then
+		for i=1, n_def do
 			if not turtle.down() then break end
 			self:_setPosition(self.position + vector.new(0,-1,0))
 			self:writeToFile()
 		end
 	end
-	if e ~= nil then
-		if (s == "left") or (s == "right") then
-			self:turnTo(keyRelative[s..e])
-		else
-			self:turnTo(e)
-		end
+	if (s_def == "left") or (s_def == "right") then
+		if keyRelative[s_def..e_def] then self:turnTo(keyRelative[s_def..e_def]) end
 	else
-		if s == "left" then
-			self:turnTo("right")
-		elseif s == "right" then
-			self:turnTo("left")
-		end
+		self:turnTo(e_def)
 	end
 end
 
@@ -291,14 +281,17 @@ reads data from file directory, and uses that as reference for Eturtle metadata
 --params
 d = directory
 --]]
-function Eturtle:readFromFile(d)
-	d_default = "turtle"
-	if d then d_default = d end
+function Eturtle.readFromFile(d)
+	d_default = d or "turtle"
 	if fs.exists(d_default) then
 		file = fs.open(d_default, "r")
 		local turtle = textutils.unserialize(file.readAll())
-		self = turtle
-	else return false end
+		file.close()
+		return turtle
+	else 
+		error("Failed to read file")
+		--return false 
+	end
 end
 
 
@@ -308,8 +301,7 @@ writes data to the file directory, for use in other programs or etc.
 d = directory
 --]]
 function Eturtle:writeToFile(d)
-	d_default = "turtle"
-	if d then d_default = d end
+	d_default = d or "turtle"
 	local file = assert(fs.open(d_default, "w"))
 	file.write(textutils.serialize(self))
 	file.close()
