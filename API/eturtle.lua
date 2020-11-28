@@ -301,8 +301,8 @@ end
 --[[
 writes data to the file directory, for use in other programs or etc.
 --]]
-function Eturtle:writeToFile(d)
-	local file = fs.open(d, "w")
+function Eturtle:writeToFile()
+	local file = fs.open("turtle", "w")
 	file.write(json.encode(self))
 	file.close()
 end
