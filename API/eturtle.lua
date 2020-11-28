@@ -301,8 +301,8 @@ end
 --[[
 writes data to the file directory, for use in other programs or etc.
 --]]
-function Eturtle:writeToFile()
-	local file = assert(fs.open("turtle", "w"))
+function Eturtle:writeToFile(d)
+	local file = assert(fs.open(d, "w"))
 	file.write(json.encode(self))
 	file.close()
 end

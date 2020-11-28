@@ -10,11 +10,11 @@ local t = et:new()
 function askForPosition()
 	print('Input space-seperated position of the turtle (x y z)')
 	local s = read()
-	fs = {}
+	s_mod = {}
 	for substring in s:gmatch("%S+") do
-	   table.insert(fs, substring)
+	   table.insert(s_mod, substring)
 	end
-	local x, y, z = fs[1], fs[2], fs[3]
+	local x, y, z = s_mod[1], s_mod[2], s_mod[3]
 	if x and y and z then
 		t:_setPosition(x, y, z)
 	else print("invalid position")
@@ -42,5 +42,5 @@ if not fs.exists("/turtle") then
 		askForPosition()
 	end
 	askForDirection()
-	t:writeToFile("/turtle")
+	t:writeToFile("turtle")
 end
