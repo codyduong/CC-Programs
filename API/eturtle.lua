@@ -1,7 +1,7 @@
---[[v0.3.11
+--[[v0.3.12
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
-os.loadAPI("api/json")
+os.loadAPI("api/json.lua")
 
 --[[
 Creation of a eturtle object, which passes itself as a param for some programs
@@ -290,7 +290,7 @@ reads data from file directory, and uses that as reference for Eturtle metadata
 --params
 d = directory
 --]]
-function ETurtle:readFromFile(d)
+function Eturtle:readFromFile(d)
 	if d then
 		local turtle = json.decodeFromFile(d)
 		self = turtle
@@ -301,7 +301,7 @@ end
 --[[
 writes data to the file directory, for use in other programs or etc.
 --]]
-function ETurtle:writeToFile(d)
+function Eturtle:writeToFile(d)
 	local file = fs.open(d, w)
 	file.write(json.encode(self))
 	file.close()
