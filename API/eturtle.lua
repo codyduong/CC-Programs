@@ -1,4 +1,4 @@
---[[V0.3.7
+--[[V0.3.8
 an API which stands for enhanced turtle, just creates more sophisticated methods
 --]]
 
@@ -199,12 +199,15 @@ function Eturtle:moveDirection(s, n, e)
 	if n then
 		a = n
 	end
-	local turnKey = {["left"] = {true,"right"}, ["right"] = {true,"left"}}
 	--starting direction --> ending direction
 	local keyRelative = 
-		{["leftleft"] = "front",["leftright"] = "back",["leftback"] = "left",
-		["rightleft"] = "back",["rightright"] = "front",["rightback"] = "right",
+		--[[
+		{["leftleft"] = "forward",["leftright"] = "back",["leftback"] = "left",
+		["rightleft"] = "back",["rightright"] = "forward",["rightback"] = "right",
 		["backleft"] = "left",["backright"] = "right",["backback"] = "back"
+		}--]]
+		{["leftright"] = "back",["leftback"] = "left",
+		["rightleft"] = "back",["rightback"] = "right",
 		}
 	--creates a vector which chooses the appropriate direction
 	local positionKey =
@@ -213,15 +216,19 @@ function Eturtle:moveDirection(s, n, e)
 		["south"] = vector.new(0,0,1),
 		["west"] = vector.new(-1,0,0)
 		}
-	if not turnKey[s] == nil then
-		if turnKey[s][1] then
-			self:turnTo(s)
-			for i=1, a do
-				if not turtle.forward() then break end
-				self._setPosition(self.position + positionKey[self.direction])
-			end
+	if s == "left" then
+		self:turnTo("left")
+		for i=1, a do
+			if not turtle.forward() then break end
+			self._setPosition(self.position + positionKey[self.direction])
 		end
-	elseif s == "front" then
+	elseif s == "right" then
+		self:turnTo("right")
+		for i=1, a do
+			if not turtle.forward() then break end
+			self._setPosition(self.position + positionKey[self.direction])
+		end
+	elseif s == "front" or s == "forward" then
 		for i=1, a do
 			if not turtle.forward() then break end
 			self._setPosition(self.position + positionKey[self.direction])
@@ -242,14 +249,18 @@ function Eturtle:moveDirection(s, n, e)
 			self._setPosition(self.position + vector.new(0,-1,0))
 		end
 	end
-	local eMod
 	if e ~= nil then
-		eMod = keyRelative[s..e]
-	end
-	if e ~= nil and turnKey[s] ~= nil then
-		self.turnTo(turnKey[s][2])
-	elseif eMod ~= nil then
-		self.turnTo(eMod)
+		if s == "left" or s == "right" then
+			self.turnTo(keyRelative[s..e])
+		else
+			self.turnTo(e)
+		end
+	else
+		if s == "left" then
+			self.turnTo("right")
+		elseif s == "right" then
+			self:turnTo("left")
+		end
 	end
 end
 
