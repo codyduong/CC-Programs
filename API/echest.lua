@@ -120,8 +120,7 @@ n2 = array or slot to deposit ({int, int} or int)
 n3 = an amount to withdraw/deposit (int) 
 --]]
 function deposit(n1, s1, n2, n3)
-	local opt = 64
-	if n3 then opt = n3 end 
+	local opt = n3 or 64
 	_shared(n1, s1, n2, opt, "drop")
 end
 
@@ -134,8 +133,7 @@ n2 = array or slot to deposit ({int, int} or int)
 n3 = an amount to withdraw/deposit (int)
 --]]
 function withdraw(n1, s1, n2, n3)
-	local opt = 64
-	if n3 then opt = n3 end 
+	local opt = n3 or 64
 	_shared(n1, s1, n2, opt, "suck")
 end
 	
